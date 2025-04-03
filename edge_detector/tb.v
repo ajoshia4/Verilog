@@ -1,41 +1,35 @@
-// Simple edge detector TB
-
-module day3_tb ();
-reg   clk;
-reg    reset;
-
-reg   a_i;
-
-wire   rising_edge_o;
-wire   falling_edge_o;
-  // Write your Testbench here...
-   // An edge detector
-
-  day3 U1 (clk,reset,a_i,rising_edge_o,falling_edge_o);
-
-  // Write your logic here...
-initial begin
-  clk=0;
-  reset =1;
-  a_i=0;
-  #20;
-  reset=0;
-  #5;
-  for(int i=0;i<10;i++) begin
-    @(posedge clk);
-    a_i= $random;
-  end
-	#100;
-  $finish();
-end
-  
-  always #5 clk=~clk;
-
-   // Monitor output
-  initial begin
-    $dumpfile("waveform.vcd");  // Generates waveform file
-    $dumpvars(0, day3_tb);  // Dumps all signals in the testbench
-  end
-
-  
-endmodule
+// Code your testbench here
+// or browse Examples
+	module tb;
+	reg   clk;
+	reg    rst_n;
+	
+	reg   inp_data;
+	
+	wire   leading_edge_det;
+	wire   trailing_edge_det;
+	
+      edge_detector U1 (clk,rst_n,inp_data,leading_edge_det,trailing_edge_det);
+	
+	initial begin
+	  clk=0;
+	  rst_n =0;
+	  inp_data=0;
+	  #10;
+	  rst_n=1;
+	  for(int i=0;i<100;i++) begin
+	    inp_data= $random;
+	    #10;
+	  end
+		#100;
+	  $finish();
+	end
+	  
+	  always #5 clk=~clk;
+	  
+	initial begin
+	    $dumpfile("dump.vcd"); // Create VCD file
+	    $dumpvars(0, tb);   // Dump all variables in testbench
+	  end
+	  
+	endmodule
