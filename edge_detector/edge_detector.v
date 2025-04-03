@@ -1,23 +1,21 @@
-// An edge detector
 
-module day3 (
-  input     wire    clk,
-  input     wire    reset,
-
-  input     wire    a_i,
-
-  output    wire    rising_edge_o,
-  output    wire    falling_edge_o
-);
-  reg q;
-
-  // Write your logic here...
-  always @(posedge clk) begin
-    if(reset) q<=0;
-    else q<=a_i;
-  end
-  
-  assign rising_edge_o = a_i & ~q;
-  assign falling_edge_o = ~a_i & q;
-  
+	module edge_detector (
+	  input     wire    clk,
+	  input     wire    rst_n,
+	
+	  input     wire    inp_data,
+	
+	  output    wire    leading_edge_det,
+	  output    wire    trailing_edge_det
+	);
+	  reg q;
+	
+	  always @(posedge clk) begin
+	    if(!rst_n) q<=0;
+	    else q<=inp_data;
+	  end
+	  
+	  assign leading_edge_det = inp_data & ~q;
+	  assign trailing_edge_det = ~inp_data & q;
+	  
 endmodule
