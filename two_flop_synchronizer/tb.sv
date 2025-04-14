@@ -2,7 +2,7 @@ module tb;
   
   logic clk,rst_n, async_in, sync_out;
   
-  n_flop_synchronizer U1(.*);
+  two_flop_synchronizer U1(.*);
   
   always #5 clk=~clk;
   
